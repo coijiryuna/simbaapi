@@ -1,0 +1,53 @@
+{
+    "name": "simba/api",
+    "description": "API Simba BAZNAS RI Integration Library untuk CodeIgniter 4",
+    "keywords": [
+        "codeigniter4",
+        "simba",
+        "baznas",
+        "api",
+        "donation",
+        "zakat",
+        "infak",
+        "sedekah"
+    ],
+    "type": "library",
+    "license": "MIT",
+    "version": "2.0.0",
+    "authors": [
+        {
+            "name": "Coiji Ryuna",
+            "email": "rifacomputerlampung@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.1"
+    },
+    "require-dev": {
+        "codeigniter/coding-standard": "^1.7",
+        "phpunit/phpunit": "^10.5.16 || ^11.2"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "simba\\api\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "post-update-cmd": [
+            "@composer dump-autoload"
+        ],
+        "test": "phpunit --colors=always -vvv"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "2.0-dev"
+        }
+    }
+}
