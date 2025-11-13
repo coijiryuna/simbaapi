@@ -1,6 +1,6 @@
 <?php
 
-namespace simba\api\Database\Seeds\laravel;
+namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
