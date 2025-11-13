@@ -242,6 +242,19 @@ SIMBA_ADMIN_EMAIL=admin@example.com
 
 ```bash
 php artisan vendor:publish --provider="simba\api\Laravel\SimbaServiceProvider"
+
+php artisan vendor:publish --provider="simba\\api\\Laravel\\SimbaServiceProvider" --tag=config
+
+php artisan vendor:publish --provider="simba\api\Laravel\SimbaServiceProvider" --tag="simba-migrations"
+
+php artisan migrate
+
+php artisan vendor:publish --provider="simba\api\Laravel\SimbaServiceProvider" --tag="simba-seeders"
+
+php artisan db:seed --class=SimbaSeeder
+
+
+
 ```
 
 This creates `config/simba.php`:
