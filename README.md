@@ -1,10 +1,13 @@
 # 🎯 Simba API - CodeIgniter 4 & Laravel Library
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![PHP: ^8.1](https://img.shields.io/badge/PHP-%5E8.1-blue.svg)](https://www.php.net/)
+[![Codeigniter: ^4](https://img.shields.io/badge/CodeIgniter-%5E4-red.svg)](https://codeigniter.com/)
+[![Laravel: ^8](https://img.shields.io/badge/Laravel-%5E8-F05340.svg)](https://laravel.com/)
 
 Pustaka (library) ini menyediakan cara mudah untuk berinteraksi dengan API Simba BAZNAS RI di dalam aplikasi CodeIgniter 4 dan Laravel.
 
-> **✨ New in v2.0**: Full Laravel support with dependency injection, service provider bindings, and publishable configuration!
+> **✨ Latest in v2.1.0**: Full Laravel support with auto-detection HTTP client, enhanced error handling, and comprehensive integration guide!
 
 ## ⚡ Quick Start
 
@@ -48,37 +51,25 @@ class DonationController extends BaseController
 
 ### For Laravel
 
-```bash
-# 1. Install
-composer require simba/api
-
-# 2. Publish configuration
-php artisan vendor:publish --provider="simba\api\Laravel\SimbaServiceProvider"
-
-# 3. Configure `.env`
-SIMBA_BASE_URL=https://demo-simba.baznas.or.id/
-SIMBA_ORG_CODE=9977200
-SIMBA_API_KEY=your_api_key
-SIMBA_ADMIN_EMAIL=admin@example.com
-
-# 4. Use in Controller
+#### Quick Method (⭐ Recommended - Simplest)
 ```php
 <?php
 namespace App\Http\Controllers;
 
-use Illuminate\Routing\Controller;
+use Illuminate\Http\Request;
+use simba\api\Libraries\Muzakki;
 
 class DonationController extends Controller
 {
-    public function registerDonor()
+    public function registerDonor(Request $request)
     {
-        $muzakki = app('simba')->muzakki();
-        // or using Facade: $muzakki = \Simba::muzakki();
+        // ✅ Direct instantiation - automatically detects Laravel Http Facade!
+        $muzakki = new Muzakki();
         
         $data = [
-            'nama'      => 'John Doe',
-            'handphone' => '08123456789',
-            'email'     => 'john@example.com'
+            'nama'      => $request->input('nama'),
+            'handphone' => $request->input('handphone'),
+            'email'     => $request->input('email')
         ];
         
         $response = $muzakki->registerDariLokal(1, $data);
@@ -86,6 +77,39 @@ class DonationController extends Controller
     }
 }
 ```
+
+#### Setup Steps
+
+```bash
+# 1. Install
+composer require simba/api
+
+# 2. Configure `.env`
+SIMBA_BASE_URL=https://demo-simba.baznas.or.id/
+SIMBA_ORG_CODE=9977200
+SIMBA_API_KEY=your_api_key
+SIMBA_ADMIN_EMAIL=admin@example.com
+
+# 3. (Optional) Publish configuration
+php artisan vendor:publish --provider="simba\api\Laravel\SimbaServiceProvider"
+
+# 4. Start using!
+```
+
+#### Alternative Method - Using Service Container
+```php
+public function registerDonor(Request $request)
+{
+    // Using Laravel's service container
+    $muzakki = app('simba')->muzakki();
+    // or using Facade: $muzakki = \Simba::muzakki();
+    
+    $response = $muzakki->registerDariLokal(1, $data);
+    return response()->json($response);
+}
+```
+
+**📖 Complete Laravel Integration Guide**: See [LARAVEL_INTEGRATION_GUIDE.md](LARAVEL_INTEGRATION_GUIDE.md)
 
 ## 📚 Available Libraries
 
@@ -99,6 +123,9 @@ class DonationController extends Controller
 
 ## ✨ Key Features
 
+✅ **Auto-Detecting HTTP Client** - Automatically selects Laravel Http Facade or CodeIgniter Services  
+✅ **Laravel Integration** - Works seamlessly with Laravel 8+  
+✅ **CodeIgniter Support** - Full CodeIgniter 4 compatibility  
 ✅ **Response Formatter** - Consistent response format  
 ✅ **Validation Trait** - Reusable validation logic  
 ✅ **Exception Handling** - Custom exception classes  
@@ -135,23 +162,32 @@ $this->validateNokk($nokk);             // Validate 16-digit KK
 
 ```
 src/
-├── Client.php                    # Base HTTP Client
-├── ServiceProvider.php           # Service registration
+├── Client.php                      # Base HTTP Client (Auto-detecting)
+├── ServiceProvider.php             # Service registration
+├── Commands/
+│   ├── InstallCommand.php         # CLI install command
+│   └── PublishCommand.php         # CLI publish command
 ├── Exceptions/
-│   └── SimbaApiException.php     # Custom exceptions
+│   └── SimbaApiException.php      # Custom exceptions
 ├── Libraries/
-│   ├── Muzakki.php              # Donatur management
-│   ├── Mustahik.php             # Recipient management
-│   ├── Pengumpulan.php          # Inbound transactions
-│   ├── Penyaluran.php           # Outbound transactions
-│   └── Upz.php                  # UPZ management
+│   ├── Muzakki.php                # Donatur management
+│   ├── Mustahik.php               # Recipient management
+│   ├── Pengumpulan.php            # Inbound transactions
+│   ├── Penyaluran.php             # Outbound transactions
+│   └── Upz.php                    # UPZ management
 ├── Services/
-│   ├── ResponseFormatter.php    # Response formatting
-│   └── ConfigService.php        # Configuration service
+│   ├── ResponseFormatter.php      # Response formatting
+│   ├── ConfigService.php          # Configuration service
+│   └── Laravel/                   # Laravel integration
+│       ├── Manager.php            # Service manager
+│       ├── Facade.php             # Facade class
+│       └── SimbaServiceProvider.php
 ├── Traits/
-│   └── ValidationTrait.php      # Reusable validations
+│   └── ValidationTrait.php        # Reusable validations
+├── Models/
+│   └── ApiModel.php               # Database model
 └── Config/
-    └── Simba.php                # Main configuration
+    └── Simba.php                  # Main configuration
 ```
 
 ## �️ Available Commands
@@ -276,13 +312,29 @@ $response = $penyaluran->simpanTransaksi([
 
 ## 📚 Documentation
 
-For complete documentation, see [DOCUMENTATION.md](DOCUMENTATION.md)  
-For changes summary, see [PERBAIKAN_SUMMARY.md](PERBAIKAN_SUMMARY.md)
+For complete documentation and guides:
+- **📘 [LARAVEL_INTEGRATION_GUIDE.md](LARAVEL_INTEGRATION_GUIDE.md)** ⭐ - Complete Laravel integration guide with examples
+- **📗 [LARAVEL_READY.md](LARAVEL_READY.md)** - Quick start checklist
+- **📕 [DOCUMENTATION.md](DOCUMENTATION.md)** - Full API reference
+- **📙 [INSTALLATION.md](INSTALLATION.md)** - Installation instructions
+- **📓 [PERBAIKAN_SUMMARY.md](PERBAIKAN_SUMMARY.md)** - Changes summary
+
+## 🔗 HTTP Client Priority
+
+The library automatically detects and selects the appropriate HTTP client:
+
+1. **Laravel Http Facade** (Laravel 8+) ← Preferred in Laravel
+2. **CodeIgniter Services** (CodeIgniter 4) ← Preferred in CodeIgniter
+3. **PHP cURL Extension** ← Fallback
+4. **Custom HTTP Client** ← If injected
+
+No manual configuration needed! 🎯
 
 ## 📞 Support
 
-For issues or questions, please contact:  
-**Email**: rifacomputerlampung@gmail.com
+For issues or questions:
+- **📧 Email**: rifacomputerlampung@gmail.com
+- **📖 Documentation**: See [LARAVEL_INTEGRATION_GUIDE.md](LARAVEL_INTEGRATION_GUIDE.md) for troubleshooting
 
 ## 📄 License
 
@@ -290,8 +342,9 @@ MIT License - See [license.md](license.md) for details
 
 ---
 
-**Version**: 2.0.0  
+**Version**: 2.1.0  
 **Last Updated**: November 2025  
-**Status**: ✅ Production Ready
+**Status**: ✅ Production Ready  
+**Frameworks Tested**: CodeIgniter 4 ✅ | Laravel 8+ ✅
 
 ```
