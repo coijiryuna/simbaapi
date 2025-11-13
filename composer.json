@@ -31,9 +31,7 @@
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
-            "simba\\api\\": "src",
-            "CodeIgniter\\Config\\": "src/compat/CodeIgniter/Config/",
-            "Config\\": "src/compat/Config/"
+            "simba\\api\\": "src"
         },
         "files": [
             "src/helpers.php"

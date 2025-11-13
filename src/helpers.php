@@ -59,3 +59,50 @@ if (!function_exists('log_message')) {
         return true;
     }
 }
+
+/**
+ * ============================================================================
+ * Conditional Compat Layer Loading
+ * ============================================================================
+ * 
+ * Load compat stubs ONLY if running in non-CodeIgniter or non-Laravel environment.
+ * This prevents conflicts with the real classes in these frameworks.
+ */
+
+// Register compat autoloader only if needed
+if (!function_exists('simba_register_compat_autoloader')) {
+    function simba_register_compat_autoloader()
+    {
+        // Only load compat if neither CodeIgniter Config nor Laravel exist
+        spl_autoload_register(function ($class) {
+            // Handle CodeIgniter\Config namespace
+            if (strpos($class, 'CodeIgniter\\Config\\') === 0) {
+                // Skip if real CodeIgniter exists
+                if (class_exists('CodeIgniter\BaseConfig', false)) {
+                    return; // Real CodeIgniter loaded, don't override
+                }
+
+                $file = __DIR__ . '/compat/CodeIgniter/Config/' . str_replace('\\', '/', substr($class, 20)) . '.php';
+                if (file_exists($file)) {
+                    require_once $file;
+                }
+            }
+
+            // Handle Config namespace
+            elseif (strpos($class, 'Config\\') === 0 && !class_exists('Illuminate\\Foundation\\Application', false)) {
+                // Skip if Laravel exists
+                if (class_exists('Illuminate\Container\Container', false)) {
+                    return; // Laravel loaded, don't override
+                }
+
+                $file = __DIR__ . '/compat/Config/' . str_replace('\\', '/', substr($class, 7)) . '.php';
+                if (file_exists($file)) {
+                    require_once $file;
+                }
+            }
+        }, true, true); // prepend=true, throw=true
+    }
+}
+
+// Auto-register the compat autoloader
+simba_register_compat_autoloader();

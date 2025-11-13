@@ -1,0 +1,31 @@
+# Git attributes for proper package handling
+
+# Exclude compat folder from release (to avoid conflicts with real CodeIgniter)
+src/compat/ export-ignore
+src/compat/** export-ignore
+
+# Exclude development files
+.gitignore export-ignore
+.gitattributes export-ignore
+phpunit.xml export-ignore
+tests/ export-ignore
+docs/ export-ignore
+CHANGELOG.md export-ignore
+PERBAIKAN_SUMMARY.md export-ignore
+COMMANDS_REFERENCE.md export-ignore
+COMMANDS_UPDATE_SUMMARY.md export-ignore
+DOCUMENTATION_INDEX.md export-ignore
+DOCUMENTATION.md export-ignore
+INSTALLATION.md export-ignore
+FINAL_CHECKLIST.md export-ignore
+LARAVEL_INTEGRATION_GUIDE.md export-ignore
+LARAVEL_READY.md export-ignore
+START_HERE_RELEASE_READY.md export-ignore
+RELEASE_*.md export-ignore
+COMPAT_*.md export-ignore
+WHY_COMPAT_NOT_IN_RELEASE.md export-ignore
+README.md export-ignore
+Client.php export-ignore
+
+# Keep important files
+!src/compat/README.md export-ignore
