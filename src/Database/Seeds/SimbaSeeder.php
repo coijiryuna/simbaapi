@@ -48,7 +48,7 @@ class SimbaSeeder extends Seeder
                 [
                     'group' => 'simba',
                     'key'   => 'api_key',
-                    'value' => 'UzBOblVsRlBWVWRtTDBad2FFVm9WM0ZaVUdnek5qSndWRmMzYWxSUmNtZzVkM292Um5sdlltczFkVmRPZEdzd2JXWm5hMUJ3YVRaM05sQjRVbWxLU0VKUWJrdFVVRGxLY2tSeVRqTk1hakp0TlV0TlN6SnhUbTQwZGxSalptaGFSVlY2ZEZSWVdsVjRTMmRRUkdKcGVYWlVaVXBJYzJFMlFWUTRaelpuYW5rPQ==',
+                    'value' => '==',
                 ],
                 [
                     'group' => 'simba',
