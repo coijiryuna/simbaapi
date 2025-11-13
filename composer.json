@@ -1,6 +1,6 @@
 {
     "name": "simba/api",
-    "description": "API Simba BAZNAS RI Integration Library untuk CodeIgniter 4",
+    "description": "API Simba BAZNAS RI Integration Library untuk CodeIgniter 4 dan Laravel",
     "keywords": [
         "codeigniter4",
         "simba",
