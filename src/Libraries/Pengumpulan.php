@@ -23,8 +23,6 @@ class Pengumpulan extends Client
     {
         parent::__construct();
         $this->lokalModel = $lokalModel;
-
-        helper('text');
     }
 
     /**
