@@ -1,0 +1,28 @@
+# Git attributes for proper package handling
+
+# Include compat folder in release - needed for Laravel and cross-framework support
+# compat folder files will be auto-loaded only if framework classes not present
+# See: src/helpers.php and CODEIGNITER_COMPATIBILITY_FIX.md
+
+# Exclude development/documentation files from Composer distribution
+.gitignore export-ignore
+.gitattributes export-ignore
+phpunit.xml export-ignore
+tests/ export-ignore
+docs/ export-ignore
+CHANGELOG.md export-ignore
+PERBAIKAN_SUMMARY.md export-ignore
+COMMANDS_REFERENCE.md export-ignore
+COMMANDS_UPDATE_SUMMARY.md export-ignore
+DOCUMENTATION_INDEX.md export-ignore
+DOCUMENTATION.md export-ignore
+INSTALLATION.md export-ignore
+FINAL_CHECKLIST.md export-ignore
+LARAVEL_INTEGRATION_GUIDE.md export-ignore
+LARAVEL_READY.md export-ignore
+START_HERE_RELEASE_READY.md export-ignore
+RELEASE_*.md export-ignore
+COMPAT_*.md export-ignore
+WHY_COMPAT_NOT_IN_RELEASE.md export-ignore
+CODEIGNITER_COMPATIBILITY_FIX.md export-ignore
+README.md export-ignore

@@ -3,8 +3,6 @@
 namespace simba\api\Config;
 
 use simba\api\Services\ConfigService;
-use CodeIgniter\Config\BaseConfig;
-
 use DateTime;
 use Exception;
 // Load compat BaseConfig if CodeIgniter version not available
@@ -15,7 +13,15 @@ if (!class_exists('CodeIgniter\Config\BaseConfig')) {
     }
 }
 
-class Simba extends BaseConfig
+// Load compat BaseConfig if CodeIgniter version not available
+if (!class_exists('CodeIgniter\Config\BaseConfig')) {
+    $baseConfigPath = __DIR__ . '/../compat/CodeIgniter/Config/BaseConfig.php';
+    if (file_exists($baseConfigPath)) {
+        require_once $baseConfigPath;
+    }
+}
+
+class Simba extends \CodeIgniter\Config\BaseConfig
 {
     // Metode untuk mendapatkan konfigurasi dari database
     public static function getBaseUrl()
