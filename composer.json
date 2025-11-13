@@ -31,8 +31,13 @@
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
-            "simba\\api\\": "src"
-        }
+            "simba\\api\\": "src",
+            "CodeIgniter\\Config\\": "src/compat/CodeIgniter/Config/",
+            "Config\\": "src/compat/Config/"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
@@ -48,6 +53,15 @@
     "extra": {
         "branch-alias": {
             "dev-main": "2.0-dev"
+        }
+        ,
+        "laravel": {
+            "providers": [
+                "simba\\api\\Laravel\\SimbaServiceProvider"
+            ],
+            "aliases": {
+                "Simba": "simba\\api\\Laravel\\Facades\\Simba"
+            }
         }
     }
 }

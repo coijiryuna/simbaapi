@@ -249,3 +249,36 @@ If you encounter issues:
 
 **Version**: 2.0.0  
 **Last Updated**: November 2024
+
+### Using in Laravel
+
+You can also use this package inside a Laravel application. The package includes a small Laravel adapter and a publishable configuration.
+
+Quick steps:
+
+1. Require the package:
+
+```bash
+composer require simba/api
+```
+
+2. Publish config (optional but recommended):
+
+```bash
+php artisan vendor:publish --provider="simba\\api\\Laravel\\SimbaServiceProvider" --tag=config
+```
+
+3. Usage examples:
+
+```php
+// Using container binding
+$muzakki = app('simba')->muzakki();
+
+// Using Facade (if autodiscovery provides alias)
+use Simba;
+$mustahik = Simba::mustahik();
+```
+
+Notes:
+- The adapter reads configuration from `config/simba.php` (publishable). If a config key is missing, the package will try to read the value from the DB as a fallback.
+- Some internals still rely on CodeIgniter helpers; to make it fully Laravel-native you may need to refactor those parts or add shims.
