@@ -59,13 +59,27 @@ class SimbaServiceProvider extends BaseServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
-        // Publish config
-        $this->publishes([
-            __DIR__ . '/../../config/simba.php' => config_path('simba.php'),
-        ], 'config');
+        // Mendaftarkan path migrasi
+        $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations/laravel');
 
-        // No routes or migrations to load for now
+        // Mendaftarkan file untuk di-publish (opsional, tapi sangat direkomendasikan)
+        if ($this->app->runningInConsole()) {
+            // Publish config
+            $this->publishes([
+                __DIR__ . '/../../config/simba.php' => config_path('simba.php'),
+            ], 'config');
+
+            // Publish Migrations
+            $this->publishes([
+                __DIR__ . '/../Database/Migrations/laravel' => database_path('migrations/vendor/simba'),
+            ], 'simba-migrations');
+
+            // Publish Seeders (pengguna bisa memanggilnya)
+            $this->publishes([
+                __DIR__ . '/../Database/Seeds/laravel/SimbaSeeder.php' => database_path('seeders/SimbaSeeder.php'),
+            ], 'simba-seeders');
+        }
     }
 }
