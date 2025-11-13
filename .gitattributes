@@ -26,5 +26,3 @@ COMPAT_*.md export-ignore
 WHY_COMPAT_NOT_IN_RELEASE.md export-ignore
 CODEIGNITER_COMPATIBILITY_FIX.md export-ignore
 README.md export-ignore
-Client.php export-ignore
-
