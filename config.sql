@@ -34,11 +34,12 @@ INSERT INTO `konfigurasi` (`id`, `group`, `key`, `value`, `created_at`, `updated
 	(4, 'demo', 'admin_email', 'baznasprov.demo@baznas.or.id', '2025-01-01 22:59:09', '2025-04-07 15:46:45'),
 	(5, 'simba', 'base_url', 'https://simba.baznas.go.id/', '2025-04-08 14:35:22', '2025-04-08 14:35:40'),
 	(6, 'simba', 'org_code', '3603300', '2025-04-08 14:36:02', '2025-04-08 14:44:37'),
-	(7, 'simba', 'api_key', 'tesapi_ey', '2025-04-08 14:36:21', '2025-04-08 14:44:49'),
-	(8, 'simba', 'admin_email', 'tes@gmail.com', '2025-04-08 14:36:35', '2025-04-08 14:45:00');
+	(7, 'simba', 'api_key', 'tes_api_key', '2025-04-08 14:36:21', '2025-04-08 14:44:49'),
+	(8, 'simba', 'admin_email', 'tesapikey@gmail.com', '2025-04-08 14:36:35', '2025-04-08 14:45:00');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;
+
