@@ -308,7 +308,7 @@ composer require simba/api:^2.1
 ---
 
 **Status**: Ready to Release v2.1.0
-**Date**: 2024
+**Date**: 2025
 **Package**: SIMBA API
 **Next Action**: Choose your method and execute Step 1!
 
