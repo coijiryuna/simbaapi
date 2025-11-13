@@ -1,8 +1,8 @@
 # Git attributes for proper package handling
 
-# Exclude compat folder from release (to avoid conflicts with real CodeIgniter)
-src/compat/ export-ignore
-src/compat/** export-ignore
+# Include compat folder in release - needed for Laravel and cross-framework support
+# compat folder files will be auto-loaded only if framework classes not present
+# See: src/helpers.php and CODEIGNITER_COMPATIBILITY_FIX.md
 
 # Exclude development/documentation files from Composer distribution
 .gitignore export-ignore
