@@ -19,31 +19,56 @@ class SimbaManager
 
     public function muzakki()
     {
+        // If running inside Laravel container, resolve the library so it receives injected client
+        if (is_object($this->app) && method_exists($this->app, 'make')) {
+            return $this->app->make(\simba\api\Libraries\Muzakki::class);
+        }
+
         return CiServiceProvider::muzakki();
     }
 
     public function mustahik()
     {
+        if (is_object($this->app) && method_exists($this->app, 'make')) {
+            return $this->app->make(\simba\api\Libraries\Mustahik::class);
+        }
+
         return CiServiceProvider::mustahik();
     }
 
     public function pengumpulan()
     {
+        if (is_object($this->app) && method_exists($this->app, 'make')) {
+            return $this->app->make(\simba\api\Libraries\Pengumpulan::class);
+        }
+
         return CiServiceProvider::pengumpulan();
     }
 
     public function penyaluran()
     {
+        if (is_object($this->app) && method_exists($this->app, 'make')) {
+            return $this->app->make(\simba\api\Libraries\Penyaluran::class);
+        }
+
         return CiServiceProvider::penyaluran();
     }
 
     public function upz()
     {
+        if (is_object($this->app) && method_exists($this->app, 'make')) {
+            return $this->app->make(\simba\api\Libraries\Upz::class);
+        }
+
         return CiServiceProvider::upz();
     }
 
     public function responseFormatter()
     {
+        if (is_object($this->app) && method_exists($this->app, 'make')) {
+            return $this->app->make(\simba\api\Services\ResponseFormatter::class);
+        }
+
         return CiServiceProvider::responseFormatter();
     }
 

@@ -1,10 +1,14 @@
-# 🎯 Simba API - CodeIgniter 4 Library
+# 🎯 Simba API - CodeIgniter 4 & Laravel Library
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Pustaka (library) ini menyediakan cara mudah untuk berinteraksi dengan API Simba BAZNAS RI di dalam aplikasi CodeIgniter 4.
+Pustaka (library) ini menyediakan cara mudah untuk berinteraksi dengan API Simba BAZNAS RI di dalam aplikasi CodeIgniter 4 dan Laravel.
+
+> **✨ New in v2.0**: Full Laravel support with dependency injection, service provider bindings, and publishable configuration!
 
 ## ⚡ Quick Start
+
+### For CodeIgniter 4
 
 ### 1. Install
 ```bash
@@ -38,6 +42,47 @@ class DonationController extends BaseController
         
         $response = $muzakki->registerDariLokal(1, $data);
         return $this->response->setJSON($response);
+    }
+}
+```
+
+### For Laravel
+
+```bash
+# 1. Install
+composer require simba/api
+
+# 2. Publish configuration
+php artisan vendor:publish --provider="simba\api\Laravel\SimbaServiceProvider"
+
+# 3. Configure `.env`
+SIMBA_BASE_URL=https://demo-simba.baznas.or.id/
+SIMBA_ORG_CODE=9977200
+SIMBA_API_KEY=your_api_key
+SIMBA_ADMIN_EMAIL=admin@example.com
+
+# 4. Use in Controller
+```php
+<?php
+namespace App\Http\Controllers;
+
+use Illuminate\Routing\Controller;
+
+class DonationController extends Controller
+{
+    public function registerDonor()
+    {
+        $muzakki = app('simba')->muzakki();
+        // or using Facade: $muzakki = \Simba::muzakki();
+        
+        $data = [
+            'nama'      => 'John Doe',
+            'handphone' => '08123456789',
+            'email'     => 'john@example.com'
+        ];
+        
+        $response = $muzakki->registerDariLokal(1, $data);
+        return response()->json($response);
     }
 }
 ```

@@ -18,12 +18,30 @@ class Client
     protected $config;
     protected $timeout;
 
-    public function __construct()
+    /**
+     * Client constructor.
+     *
+     * @param mixed|null $httpClient Optional HTTP client to use (Laravel Http factory or similar). If null, falls back to CodeIgniter Services::curlrequest().
+     */
+    public function __construct($httpClient = null)
     {
         // Ambil konfigurasi dari file Simba config
         $this->config = new Simba();
         $this->timeout = $this->config->timeout ?? 5; // Default timeout 5 detik
-        
+
+        if ($httpClient !== null) {
+            // Use injected client (expected: Illuminate\Http\Client\Factory or compatible)
+            $this->client = $httpClient;
+            return;
+        }
+
+        // If Laravel Http facade is available, prefer using it via the facade as a fallback
+        if (class_exists('\Illuminate\Support\Facades\Http')) {
+            $this->client = null; // We'll use the facade directly in sendRequest when $this->client is null
+            return;
+        }
+
+        // Fallback to existing CodeIgniter client
         $this->client = Services::curlrequest([
             'timeout' => $this->timeout,
         ]);
@@ -58,9 +76,25 @@ class Client
 
             $fullUrl = $this->config->getBaseUrl() . $endpoint;
 
-            // If running inside a Laravel app and the Http facade is available, prefer it
-            if (class_exists('Illuminate\\Support\\Facades\\Http')) {
-                // Build options for Laravel HTTP client
+            // If an injected Laravel HTTP client (Illuminate\Http\Client\Factory) is set, use it
+            if (is_object($this->client) && class_exists('\Illuminate\Http\Client\Factory') && $this->client instanceof \Illuminate\Http\Client\Factory) {
+                $laravelOptions = ['timeout' => $this->timeout];
+
+                if ($method === 'GET') {
+                    $res = $this->client->withOptions($laravelOptions)->get($fullUrl, $data);
+                } else {
+                    if ($bodyFormat === 'json') {
+                        $res = $this->client->withOptions($laravelOptions)->post($fullUrl, $data);
+                    } else {
+                        $res = $this->client->asForm()->withOptions($laravelOptions)->post($fullUrl, $data);
+                    }
+                }
+
+                $statusCode = $res->status();
+                $body = $res->body();
+            }
+            // If client is null but Http facade exists, use the facade
+            elseif ($this->client === null && class_exists('Illuminate\\Support\\Facades\\Http')) {
                 $laravelOptions = ['timeout' => $this->timeout];
 
                 if ($method === 'GET') {

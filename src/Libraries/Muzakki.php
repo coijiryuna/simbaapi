@@ -18,9 +18,9 @@ class Muzakki extends Client
 
     protected $lokalModel;
 
-    public function __construct($lokalModel = null)
+    public function __construct($lokalModel = null, $httpClient = null)
     {
-        parent::__construct();
+        parent::__construct($httpClient);
         $this->lokalModel = $lokalModel;
     }
 
