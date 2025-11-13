@@ -11,7 +11,7 @@ Pustaka (library) ini menyediakan cara mudah untuk berinteraksi dengan API Simba
 
 ## ⚡ Quick Start
 
-### For CodeIgniter 4
+### For CodeIgniter 4.x
 
 ### 1. Install
 ```bash
