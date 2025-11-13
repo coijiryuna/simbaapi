@@ -7,6 +7,13 @@ use CodeIgniter\Config\BaseConfig;
 
 use DateTime;
 use Exception;
+// Load compat BaseConfig if CodeIgniter version not available
+if (!class_exists('CodeIgniter\Config\BaseConfig')) {
+    $baseConfigPath = __DIR__ . '/../compat/CodeIgniter/Config/BaseConfig.php';
+    if (file_exists($baseConfigPath)) {
+        require_once $baseConfigPath;
+    }
+}
 
 class Simba extends BaseConfig
 {
