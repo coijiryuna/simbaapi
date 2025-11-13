@@ -4,7 +4,7 @@
 src/compat/ export-ignore
 src/compat/** export-ignore
 
-# Exclude development files
+# Exclude development/documentation files from Composer distribution
 .gitignore export-ignore
 .gitattributes export-ignore
 phpunit.xml export-ignore
@@ -24,8 +24,7 @@ START_HERE_RELEASE_READY.md export-ignore
 RELEASE_*.md export-ignore
 COMPAT_*.md export-ignore
 WHY_COMPAT_NOT_IN_RELEASE.md export-ignore
+CODEIGNITER_COMPATIBILITY_FIX.md export-ignore
 README.md export-ignore
 Client.php export-ignore
 
-# Keep important files
-!src/compat/README.md export-ignore
