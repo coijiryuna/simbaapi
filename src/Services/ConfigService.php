@@ -51,11 +51,11 @@ class ConfigService
      */
     private function detectLaravel()
     {
-        if (function_exists('config') || function_exists('app')) {
+        if (class_exists('\\Illuminate\\Foundation\\Application') || class_exists('\\Illuminate\\Support\\Facades\\Config')) {
             return true;
         }
 
-        if (class_exists('\\Illuminate\\Support\\Application') || class_exists('Illuminate\\Support\\Facades\\Config')) {
+        if (function_exists('app') && is_a(app(), 'Illuminate\Contracts\Foundation\Application')) {
             return true;
         }
 
